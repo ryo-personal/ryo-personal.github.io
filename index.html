@@ -1,212 +1,511 @@
-<!DOCTYPE html><html lang="ja">
+<!DOCTYPE html>
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ryo's Portfolio</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --main-color: #007bff;
+      --main-color: #3a86ff;
       --bg-color: #0d1117;
       --text-color: #f1f1f1;
-      --card-bg: #161b22;
+      --card-bg: linear-gradient(145deg, #161b22, #1f2937);
       --accent-color: #00bfff;
-    }* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+      --secondary-color: #8338ec;
+      --highlight-color: #ff006e;
+      --glass-bg: rgba(22, 27, 34, 0.7);
+      --border-radius: 16px;
+      --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  overflow-x: hidden;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-header {
-  background: linear-gradient(135deg, #0a0f1d, #0e245b);
-  padding: 4rem 2rem;
-  text-align: center;
-  animation: fadeIn 2s ease-in-out;
-}
+    body {
+      font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-header img {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  border: 4px solid var(--main-color);
-  margin-bottom: 1rem;
-  animation: float 3s ease-in-out infinite;
-}
+    /* スクロールバー */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
 
-header h1 {
-  font-size: 2.8rem;
-  margin-bottom: 0.5rem;
-  color: var(--accent-color);
-}
+    ::-webkit-scrollbar-track {
+      background: var(--bg-color);
+    }
 
-header p {
-  font-size: 1.2rem;
-  opacity: 0.85;
-}
+    ::-webkit-scrollbar-thumb {
+      background: var(--main-color);
+      border-radius: 5px;
+    }
 
-nav {
-  display: flex;
-  justify-content: center;
-  background-color: #0a0f1d;
-  padding: 1rem;
-  gap: 2rem;
-  border-bottom: 1px solid #1a1f2b;
-}
+    /* ヘッダー */
+    header {
+      background: linear-gradient(135deg, #0a0f1d, #0e245b);
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 1.5s ease-in-out;
+    }
 
-nav a {
-  color: var(--text-color);
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s;
-}
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 70% 20%, rgba(58, 134, 255, 0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
 
-nav a:hover {
-  color: var(--main-color);
-}
+    header img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 4px solid var(--main-color);
+      margin-bottom: 1.5rem;
+      animation: float 4s ease-in-out infinite;
+      object-fit: cover;
+      box-shadow: 0 10px 30px rgba(58, 134, 255, 0.3);
+      transition: var(--transition);
+    }
 
-section {
-  padding: 3rem 1.5rem;
-  max-width: 1000px;
-  margin: auto;
-  animation: slideUp 1s ease-in-out;
-}
+    header img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px rgba(58, 134, 255, 0.4);
+    }
 
-.card {
-  background: var(--card-bg);
-  padding: 2rem;
-  border-radius: 16px;
-  margin-bottom: 2rem;
-  transition: transform 0.3s, box-shadow 0.3s;
-  border-left: 6px solid var(--main-color);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--main-color), var(--accent-color));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
 
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
-}
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-h2 {
-  color: var(--main-color);
-  margin-bottom: 1rem;
-}
+    /* ナビゲーション */
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(10, 15, 29, 0.9);
+      padding: 1.2rem;
+      gap: 2.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-.icon {
-  margin-right: 0.5rem;
-}
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      position: relative;
+      overflow: hidden;
+    }
 
-.skills-list, .hobbies-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-}
+    nav a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--main-color), var(--accent-color));
+      transition: var(--transition);
+    }
 
-.skills-list div, .hobbies-list div {
-  background-color: #1f2a3a;
-  padding: 0.8rem;
-  border-radius: 8px;
-  text-align: center;
-}
+    nav a:hover {
+      color: var(--accent-color);
+    }
 
-footer {
-  text-align: center;
-  padding: 2rem 1rem;
-  background-color: #0a0f1d;
-  font-size: 0.9rem;
-  opacity: 0.6;
-}
+    nav a:hover::before {
+      width: 100%;
+    }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+    nav a i {
+      margin-right: 0.6rem;
+      font-size: 1.1rem;
+    }
 
-@keyframes slideUp {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
+    /* セクション */
+    section {
+      padding: 4rem 1.5rem;
+      max-width: 1100px;
+      margin: auto;
+    }
 
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0); }
-}
+    section:nth-child(even) {
+      background: linear-gradient(rgba(13, 17, 23, 0.8), rgba(13, 17, 23, 0.9));
+    }
 
-@media (max-width: 768px) {
-  header h1 {
-    font-size: 2rem;
-  }
+    /* カード */
+    .card {
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 2.5rem;
+      transition: var(--transition);
+      border-left: 6px solid var(--main-color);
+      box-shadow: var(--box-shadow);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
 
-  .skills-list, .hobbies-list {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  }
-}
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(58, 134, 255, 0.1) 0%, transparent 70%);
+      transform: rotate(30deg);
+      pointer-events: none;
+    }
 
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 40px rgba(0, 123, 255, 0.4);
+    }
+
+    .card h2 {
+      color: var(--main-color);
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .card h2 i {
+      margin-right: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .card p {
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    /* スキルリスト */
+    .skills-list, .hobbies-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+
+    .skills-list div, .hobbies-list div {
+      background: linear-gradient(135deg, rgba(31, 42, 58, 0.8), rgba(22, 27, 34, 0.9));
+      padding: 1.2rem;
+      border-radius: 12px;
+      text-align: center;
+      transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+
+    .skills-list div:hover, .hobbies-list div:hover {
+      transform: translateY(-5px);
+      background: linear-gradient(135deg, rgba(58, 134, 255, 0.2), rgba(22, 27, 34, 0.9));
+      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+      border-color: rgba(58, 134, 255, 0.3);
+    }
+
+    /* コンタクトリンク */
+    .contact-link {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.8rem 1.5rem;
+      background: linear-gradient(90deg, var(--main-color), var(--accent-color));
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+    }
+
+    .contact-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(58, 134, 255, 0.4);
+      background: linear-gradient(90deg, var(--accent-color), var(--main-color));
+    }
+
+    /* フッター */
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: linear-gradient(135deg, #0a0f1d, #0e245b);
+      font-size: 1rem;
+      position: relative;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/dark-geometric.png');
+      opacity: 0.1;
+      pointer-events: none;
+    }
+
+    footer p {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* アニメーション */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* レスポンシブデザイン */
+    @media (max-width: 768px) {
+      header {
+        padding: 4rem 1.5rem 3rem;
+      }
+
+      header h1 {
+        font-size: 2.2rem;
+      }
+
+      header p {
+        font-size: 1.1rem;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 0.8rem;
+      }
+
+      nav a {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      section {
+        padding: 2.5rem 1rem;
+      }
+
+      .card {
+        padding: 1.8rem;
+      }
+
+      .skills-list, .hobbies-list {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      header img {
+        width: 120px;
+        height: 120px;
+      }
+
+      nav a span {
+        display: none;
+      }
+
+      nav a i {
+        margin-right: 0;
+        font-size: 1.3rem;
+      }
+
+      .card h2 {
+        font-size: 1.5rem;
+      }
+
+      .skills-list, .hobbies-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* パララックス効果 */
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
   </style>
 </head>
 <body>
-  <header>
+  <header class="parallax">
     <img src="https://pbs.twimg.com/profile_images/1916192551885017091/6pryruBw.jpg" alt="Ryo Icon">
     <h1>Ryo</h1>
-    <p>初心者プログラマー</p>
-  </header>  <nav>
-    <a href="#about"><i class="fas fa-user icon"></i>自己紹介</a>
-    <a href="#skills"><i class="fas fa-code icon"></i>スキル</a>
-    <a href="#hobbies"><i class="fas fa-music icon"></i>趣味</a>
-    <a href="#playlist"><i class="fas fa-headphones icon"></i>プレイリスト</a>
-    <a href="#contact"><i class="fas fa-envelope icon"></i>連絡先</a>
-  </nav>  <section id="about">
-    <div class="card">
+    <p>Passionate Developer & Creative Thinker</p>
+  </header>
+
+  <nav>
+    <a href="#about"><i class="fas fa-user icon"></i><span>自己紹介</span></a>
+    <a href="#skills"><i class="fas fa-code icon"></i><span>スキル</span></a>
+    <a href="#hobbies"><i class="fas fa-music icon"></i><span>趣味</span></a>
+    <a href="#playlist"><i class="fas fa-headphones icon"></i><span>プレイリスト</span></a>
+    <a href="#contact"><i class="fas fa-envelope icon"></i><span>連絡先</span></a>
+  </nav>
+
+  <section id="about">
+    <div class="card" data-aos="fade-up">
       <h2><i class="fas fa-user icon"></i>About Me</h2>
-      <p>24歳。関西。</p>
+      <p>24歳。関西在住の情熱的なプログラマーです。技術を通じて価値を創造することに喜びを感じています。</p>
+      <p>常に新しい技術を学び、自己成長を続けることを信条としています。チームでの協働作業を大切にし、スクラム開発の経験を活かしてプロジェクトに貢献します。</p>
     </div>
-  </section>  <section id="skills">
-    <div class="card">
+  </section>
+
+  <section id="skills">
+    <div class="card" data-aos="fade-up">
       <h2><i class="fas fa-code icon"></i>Skills</h2>
+      <p>これまでに習得した技術スキルと経験です。</p>
       <div class="skills-list">
-        <div>HTML</div>
-        <div>CSS</div>
-        <div>JavaScript</div>
-        <div>React (勉強中)</div>
-        <div>Git / GitHub</div>
-        <div>スクラム開発</div>
-        <div>教育カリキュラム設計</div>
+        <div><i class="fab fa-html5"></i> HTML5</div>
+        <div><i class="fab fa-css3-alt"></i> CSS3</div>
+        <div><i class="fab fa-js"></i> JavaScript</div>
+        <div><i class="fab fa-react"></i> React (勉強中)</div>
+        <div><i class="fab fa-git-alt"></i> Git / GitHub</div>
+        <div><i class="fas fa-users"></i> スクラム開発</div>
+        <div><i class="fas fa-chalkboard-teacher"></i> 教育カリキュラム設計</div>
+        <div><i class="fas fa-mobile-alt"></i> レスポンシブデザイン</div>
       </div>
     </div>
-  </section>  <section id="hobbies">
-    <div class="card">
+  </section>
+
+  <section id="hobbies">
+    <div class="card" data-aos="fade-up">
       <h2><i class="fas fa-music icon"></i>Hobbies</h2>
+      <p>仕事以外の時間に楽しんでいることです。</p>
       <div class="hobbies-list">
-        <div>J-POP</div>
-        <div>K-POP</div>
-        <div>洋楽</div>
-        <div>Jラップ</div>
-        <div>筋トレ(サボリ気味)</div>
-        <div>格闘技観戦(にわかの見る専)</div>
-        <div>ゲーム実況視聴(ポキさん、もこう)</div>
+        <div><i class="fas fa-compact-disc"></i> J-POP</div>
+        <div><i class="fas fa-music"></i> K-POP</div>
+        <div><i class="fas fa-globe-americas"></i> 洋楽</div>
+        <div><i class="fas fa-microphone-alt"></i> Jラップ</div>
+        <div><i class="fas fa-dumbbell"></i> 筋トレ(サボリ気味)</div>
+        <div><i class="fas fa-boxing-glove"></i> 格闘技観戦</div>
+        <div><i class="fas fa-gamepad"></i> ゲーム実況視聴</div>
+        <div><i class="fas fa-laptop-code"></i> 新しい技術の勉強</div>
       </div>
     </div>
-  </section>  <section id="playlist">
-    <div class="card">
+  </section>
+
+  <section id="playlist">
+    <div class="card" data-aos="fade-up">
       <h2><i class="fas fa-headphones icon"></i>Favorite Playlist</h2>
-      <p>後ほど追加予定！</p>
+      <p>現在制作中です。近日公開予定！</p>
+      <div style="margin-top: 2rem; background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 12px; border: 1px dashed var(--main-color);">
+        <p><i class="fas fa-spinner fa-spin"></i> プレイリストを準備しています...</p>
+      </div>
     </div>
-  </section>  <section id="contact">
-    <div class="card">
+  </section>
+
+  <section id="contact">
+    <div class="card" data-aos="fade-up">
       <h2><i class="fas fa-envelope icon"></i>Contact</h2>
-      <p>Twitter: <a href="https://twitter.com/YourmoneyG" target="_blank" style="color: var(--accent-color);">@YourmoneyG</a></p>
-      <!-- <p>メール: <a href="mailto:dummy@example.com" style="color: var(--accent-color);">dummy@example.com</a></p> -->
+      <p>お問い合わせはTwitterのDMまでお気軽にどうぞ！</p>
+      <a href="https://twitter.com/YourmoneyG" target="_blank" class="contact-link">
+        <i class="fab fa-twitter"></i> Twitterで連絡する
+      </a>
+      <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="https://twitter.com/YourmoneyG" target="_blank" style="color: var(--text-color); text-decoration: none; display: flex; align-items: center;">
+          <i class="fab fa-twitter" style="font-size: 1.5rem; margin-right: 0.5rem; color: #1DA1F2;"></i>
+          @YourmoneyG
+        </a>
+        <!-- 他のSNSリンクを追加可能 -->
+      </div>
     </div>
-  </section>  <footer>
+  </section>
+
+  <footer>
     <p>&copy; 2025 Ryo. All rights reserved.</p>
+    <p style="margin-top: 0.5rem; font-size: 0.9rem;">Made with <i class="fas fa-heart" style="color: var(--highlight-color);"></i> and <i class="fas fa-code" style="color: var(--main-color);"></i></p>
   </footer>
+
+  <script>
+    // スクロール時のアニメーション
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.card');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+      });
+
+      // スムーススクロール
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+    });
+  </script>
 </body>
 </html>
