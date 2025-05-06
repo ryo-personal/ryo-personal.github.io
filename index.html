@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ryo's Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --main-color: #007bff;
+      --bg-color: #0d1117;
+      --text-color: #f1f1f1;
+      --card-bg: #161b22;
+      --accent-color: #00bfff;
+    }* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+}
+
+header {
+  background: linear-gradient(135deg, #0a0f1d, #0e245b);
+  padding: 4rem 2rem;
+  text-align: center;
+  animation: fadeIn 2s ease-in-out;
+}
+
+header img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid var(--main-color);
+  margin-bottom: 1rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-color);
+}
+
+header p {
+  font-size: 1.2rem;
+  opacity: 0.85;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  background-color: #0a0f1d;
+  padding: 1rem;
+  gap: 2rem;
+  border-bottom: 1px solid #1a1f2b;
+}
+
+nav a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: var(--main-color);
+}
+
+section {
+  padding: 3rem 1.5rem;
+  max-width: 1000px;
+  margin: auto;
+  animation: slideUp 1s ease-in-out;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-left: 6px solid var(--main-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+}
+
+h2 {
+  color: var(--main-color);
+  margin-bottom: 1rem;
+}
+
+.icon {
+  margin-right: 0.5rem;
+}
+
+.skills-list, .hobbies-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.skills-list div, .hobbies-list div {
+  background-color: #1f2a3a;
+  padding: 0.8rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: #0a0f1d;
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .skills-list, .hobbies-list {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://pbs.twimg.com/profile_images/1916192551885017091/6pryruBw.jpg" alt="Ryo Icon">
+    <h1>Ryo</h1>
+    <p>初心者プログラマー | 青が好き | かっこいいを追求中</p>
+  </header>  <nav>
+    <a href="#about"><i class="fas fa-user icon"></i>自己紹介</a>
+    <a href="#skills"><i class="fas fa-code icon"></i>スキル</a>
+    <a href="#hobbies"><i class="fas fa-music icon"></i>趣味</a>
+    <a href="#playlist"><i class="fas fa-headphones icon"></i>プレイリスト</a>
+    <a href="#contact"><i class="fas fa-envelope icon"></i>連絡先</a>
+  </nav>  <section id="about">
+    <div class="card">
+      <h2><i class="fas fa-user icon"></i>About Me</h2>
+      <p>24歳。過去に荒れていた時期があったが、今は社会で評価される大人を目指してリスタート。2025年は「継続」と「形にする」一年。筋トレ、格闘技（RIZINの朝倉未来やヒロヤ篠塚が好き）、音楽、ゲーム実況が好き。</p>
+    </div>
+  </section>  <section id="skills">
+    <div class="card">
+      <h2><i class="fas fa-code icon"></i>Skills</h2>
+      <div class="skills-list">
+        <div>HTML</div>
+        <div>CSS</div>
+        <div>JavaScript</div>
+        <div>React (勉強中)</div>
+        <div>Git / GitHub</div>
+        <div>スクラム開発</div>
+        <div>教育カリキュラム設計</div>
+      </div>
+    </div>
+  </section>  <section id="hobbies">
+    <div class="card">
+      <h2><i class="fas fa-music icon"></i>Hobbies</h2>
+      <div class="hobbies-list">
+        <div>J-POP</div>
+        <div>K-POP</div>
+        <div>洋楽</div>
+        <div>Jラップ</div>
+        <div>筋トレ(サボリ気味)</div>
+        <div>格闘技観戦(にわかの見る専)</div>
+        <div>ゲーム実況視聴(ポキさん、もこう)</div>
+      </div>
+    </div>
+  </section>  <section id="playlist">
+    <div class="card">
+      <h2><i class="fas fa-headphones icon"></i>Favorite Playlist</h2>
+      <p>後ほど追加予定！</p>
+    </div>
+  </section>  <section id="contact">
+    <div class="card">
+      <h2><i class="fas fa-envelope icon"></i>Contact</h2>
+      <p>Twitter: <a href="https://twitter.com/YourmoneyG" target="_blank" style="color: var(--accent-color);">@YourmoneyG</a></p>
+      <!-- <p>メール: <a href="mailto:dummy@example.com" style="color: var(--accent-color);">dummy@example.com</a></p> -->
+    </div>
+  </section>  <footer>
+    <p>&copy; 2025 Ryo. All rights reserved.</p>
+  </footer>
+</body>
+</html>
