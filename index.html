@@ -870,14 +870,6 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // すべての曲を配列に格納
-    const allSongs = [];
-    document.querySelectorAll('.playlist-items a').forEach(link => {
-      allSongs.push({
-        title: link.textContent,
-        url: link.href
-      });
-    });
 
     let currentPlaylist = [];
     let currentIndex = 0;
@@ -887,7 +879,7 @@
     // 今日の30曲を選ぶボタン
     document.getElementById('random30Btn').addEventListener('click', function() {
       // ランダムに30曲選ぶ（重複なし）
-      const shuffled = [...allSongs].sort(() => 0.5 - Math.random());
+      const shuffled = [...rawSongs].sort(() => 0.5 - Math.random());
       currentPlaylist = shuffled.slice(0, 30);
       currentIndex = 0;
       
@@ -923,6 +915,7 @@
     // 現在の曲を再生
     function playCurrentSong() {
       const currentSong = currentPlaylist[currentIndex];
+      console.log(currentSong);
       if (!currentSong) return;
       
       document.getElementById('currentPlaying').textContent = `再生中: ${currentIndex + 1}. ${currentSong.title}`;
