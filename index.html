@@ -804,6 +804,206 @@
       }
     });
   </script>
+
+  <style>
+  .playlist-btn {
+    background: linear-gradient(90deg, var(--main-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 auto;
+  }
+
+  .playlist-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(58, 134, 255, 0.4);
+    background: linear-gradient(90deg, var(--secondary-color), var(--main-color));
+  }
+
+  .player-btn {
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--main-color);
+    padding: 0.7rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .player-btn:hover {
+    background: var(--main-color);
+    color: white;
+  }
+
+  #playlistDisplay {
+    background: rgba(22, 27, 34, 0.7);
+  }
+
+  #playlistDisplay div {
+    padding: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+  }
+
+  #playlistDisplay div:hover {
+    background: rgba(58, 134, 255, 0.1);
+  }
+
+  #playlistDisplay div.playing {
+    background: rgba(58, 134, 255, 0.2);
+    color: var(--accent-color);
+    font-weight: bold;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // すべての曲を配列に格納
+    const allSongs = [];
+    document.querySelectorAll('.playlist-items a').forEach(link => {
+      allSongs.push({
+        title: link.textContent,
+        url: link.href
+      });
+    });
+
+    let currentPlaylist = [];
+    let currentIndex = 0;
+    let isPlaying = false;
+    let iframePlayer = null;
+
+    // 今日の30曲を選ぶボタン
+    document.getElementById('random30Btn').addEventListener('click', function() {
+      // ランダムに30曲選ぶ（重複なし）
+      const shuffled = [...allSongs].sort(() => 0.5 - Math.random());
+      currentPlaylist = shuffled.slice(0, 30);
+      currentIndex = 0;
+      
+      // プレイリストを表示
+      displayPlaylist();
+      document.getElementById('playerContainer').style.display = 'block';
+      
+      // 最初の曲を再生
+      playCurrentSong();
+    });
+
+    // プレイリストを表示
+    function displayPlaylist() {
+      const playlistDisplay = document.getElementById('playlistDisplay');
+      playlistDisplay.innerHTML = '';
+      
+      currentPlaylist.forEach((song, index) => {
+        const songElement = document.createElement('div');
+        songElement.textContent = `${index + 1}. ${song.title}`;
+        songElement.addEventListener('click', () => {
+          currentIndex = index;
+          playCurrentSong();
+        });
+        
+        if (index === currentIndex) {
+          songElement.classList.add('playing');
+        }
+        
+        playlistDisplay.appendChild(songElement);
+      });
+    }
+
+    // 現在の曲を再生
+    function playCurrentSong() {
+      const currentSong = currentPlaylist[currentIndex];
+      if (!currentSong) return;
+      
+      document.getElementById('currentPlaying').textContent = `再生中: ${currentIndex + 1}. ${currentSong.title}`;
+      
+      // YouTubeプレイヤーを更新
+      if (iframePlayer) {
+        iframePlayer.src = currentSong.url.replace('watch?v=', 'embed/') + '?autoplay=1';
+      } else {
+        iframePlayer = document.createElement('iframe');
+        iframePlayer.width = '0';
+        iframePlayer.height = '0';
+        iframePlayer.src = currentSong.url.replace('watch?v=', 'embed/') + '?autoplay=1';
+        iframePlayer.frameBorder = '0';
+        iframePlayer.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframePlayer.allowFullscreen = true;
+        document.getElementById('playerContainer').appendChild(iframePlayer);
+      }
+      
+      // プレイリスト表示を更新
+      const allSongsElements = document.querySelectorAll('#playlistDisplay div');
+      allSongsElements.forEach(el => el.classList.remove('playing'));
+      allSongsElements[currentIndex].classList.add('playing');
+      
+      isPlaying = true;
+      document.getElementById('playPauseBtn').innerHTML = '<i class="fas fa-pause"></i> 一時停止';
+    }
+
+    // 再生/一時停止ボタン
+    document.getElementById('playPauseBtn').addEventListener('click', function() {
+      if (currentPlaylist.length === 0) return;
+      
+      if (isPlaying) {
+        // 一時停止
+        if (iframePlayer) {
+          iframePlayer.src = iframePlayer.src.replace('autoplay=1', 'autoplay=0');
+        }
+        this.innerHTML = '<i class="fas fa-play"></i> 再生';
+        isPlaying = false;
+      } else {
+        // 再生
+        playCurrentSong();
+      }
+    });
+
+    // 前の曲ボタン
+    document.getElementById('prevBtn').addEventListener('click', function() {
+      if (currentPlaylist.length === 0) return;
+      
+      currentIndex = (currentIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
+      playCurrentSong();
+    });
+
+    // 次の曲ボタン
+    document.getElementById('nextBtn').addEventListener('click', function() {
+      if (currentPlaylist.length === 0) return;
+      
+      currentIndex = (currentIndex + 1) % currentPlaylist.length;
+      playCurrentSong();
+    });
+
+    // シャッフルボタン
+    document.getElementById('shuffleBtn').addEventListener('click', function() {
+      if (currentPlaylist.length === 0) return;
+      
+      // 現在の曲を保持してシャッフル
+      const currentSong = currentPlaylist[currentIndex];
+      const shuffled = [...currentPlaylist].sort(() => 0.5 - Math.random());
+      
+      // 現在の曲を先頭に移動
+      const currentSongIndex = shuffled.findIndex(song => song.url === currentSong.url);
+      if (currentSongIndex > 0) {
+        [shuffled[0], shuffled[currentSongIndex]] = [shuffled[currentSongIndex], shuffled[0]];
+      }
+      
+      currentPlaylist = shuffled;
+      currentIndex = 0;
+      displayPlaylist();
+      playCurrentSong();
+    });
+  });
+</script>
   
   <style>
         /* 新しいプレイリストスタイル */
